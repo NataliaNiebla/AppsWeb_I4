@@ -1,23 +1,22 @@
-// Importa el módulo 'express', que es un framework para crear servidores web y APIs en Node.js
-import express from 'express';
-// Importa 'morgan', un middleware que registra las solicitudes HTTP en la consola
-import morgan from 'morgan';
+import express from 'express'; // Importa el módulo 'express', que es un framework para crear servidores web y APIs en Node.js
+import morgan from 'morgan'; // Importa 'morgan', un middleware que registra las solicitudes HTTP en la consola
+import connectDB from './config/db';
 
 // Importación comentada de las rutas de autenticación (se puede habilitar cuando exista el archivo correspondiente)
-import authRoutes from './routes/auth.route';
+import authRoutes from './routes/auth.routes';
+import { connect } from 'http2';
 
 // Crea una instancia de la aplicación Express
 const app = express();
 const PORT = process.env.PORT || 3000;
-// Middleware que permite a Express interpretar JSON en las solicitudes entrantes
-app.use(express.json());
-// Middleware que utiliza Morgan para registrar las solicitudes en el formato 'dev' (resumen legible)
-app.use(morgan('dev'));
 
-// Middleware comentado que montaría las rutas de autenticación bajo el prefijo '/api/auth'
-app.use('/api/auth', authRoutes);
+app.use(express.json()); // Middleware que permite a Express interpretar JSON en las solicitudes entrantes
+app.use(morgan('dev')); // Middleware que utiliza Morgan para registrar las solicitudes en el formato 'dev' (resumen legible)
 
-// Inicia el servidor y lo pone a escuchar en el puerto definido. Imprime un mensaje en consola cuando está listo.
-app.listen(PORT, () => {
-  console.log(`Server is running on http://localhost:${PORT}`);
+app.use('/api/v1/auth', authRoutes); //Agregar la ruta '/api/auth'
+
+connectDB().then (() => {
+  app.listen(PORT, () => {
+    console.log(`Server is running on http://localhost:${PORT}`);
+  });
 });
