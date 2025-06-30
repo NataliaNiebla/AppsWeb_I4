@@ -9,7 +9,7 @@ import bcrypt from "bcrypt";
 export const login = async (req: Request, res: Response) => {
     try {
         const { email, password } = req.body;
-
+console.log(email)
         const user = await User.findOne({ email });
         if (!user) {
             return res.status(401).json({ message: "credenciales incorrectas" });

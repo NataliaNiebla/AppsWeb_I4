@@ -1,11 +1,14 @@
 import { Document, Schema, Types, model } from "mongoose";
 
-export interface IProduct extends Document { // Definición de la interfaz del producto
-    _id:Types.ObjectId;
+// Interfaz del producto
+export interface IProduct extends Document {
+    _id: Types.ObjectId;
     name: string;
     description: string;
     quantity: number;
     price: number;
+    status: string;
+    deleteDate: Date | null;
 }
 
 // Esquema del producto
@@ -30,8 +33,17 @@ const productSchema = new Schema<IProduct>({
         required: true,
         min: 0,
     },
+    status: {
+        type: String,
+        enum: ['activo', 'inactivo'],
+        default: 'activo',
+    },
+    deleteDate: {
+        type: Date,
+        default: null,
+    }
 }, {
-    timestamps: true // Esto agrega createdAt y updatedAt automáticamente
+    timestamps: true // Agrega automáticamente createdAt y updatedAt
 });
 
 // Exportar el modelo
