@@ -1,16 +1,17 @@
-import { request, response } from "express";
+import { Request, Response } from "express";
 import NodeCache from "node-cache";
 import { generateAccessToken } from "../utils/generateToken";
 
  //Inicializa el caché de Node
 const cache= new NodeCache();
 
-export const login=(req=request, res=response)=>{
+export const login = (req: Request, res: Response): void => {
     const { username, password } = req.body;
 
     // Simulate user authentication
     if (username!=="admin" || password!=="1234") {
-    return res.status(401).json({ message: "Invalid credentials" });
+        res.status(401).json({ message: "Invalid credentials" });
+        return;
     }
 
     const userId="123456";
