@@ -2,6 +2,8 @@
 import express from 'express';
 // Importa 'morgan', un middleware que registra las solicitudes HTTP en la consola
 import morgan from 'morgan';
+// Importa 'cors', un middleware que habilita CORS (Cross-Origin Resource Sharing)
+import cors from 'cors';
 
 // Importación comentada de las rutas de autenticación (se puede habilitar cuando exista el archivo correspondiente)
 import authRoutes from './routes/auth.route';
@@ -9,6 +11,13 @@ import authRoutes from './routes/auth.route';
 // Crea una instancia de la aplicación Express
 const app = express();
 const PORT = process.env.PORT || 3000;
+
+// Configuración de CORS para permitir solicitudes desde el frontend
+app.use(cors({
+  origin: 'http://localhost:5173',
+  credentials: true
+}));
+
 // Middleware que permite a Express interpretar JSON en las solicitudes entrantes
 app.use(express.json());
 // Middleware que utiliza Morgan para registrar las solicitudes en el formato 'dev' (resumen legible)
