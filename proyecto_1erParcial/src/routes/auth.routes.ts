@@ -1,6 +1,5 @@
 import { Router } from 'express';
 import { getAllUsers, getTimeToken, login, updateToken, saveUser, updateUser, deleteUser} from '../controllers/auth.controller';
-import { get } from 'http';
 
 // Import the login function from the controller
 const router = Router();
